@@ -5,6 +5,12 @@
 
 ---
 
+## 🌐 Project Context: Modeling the Virtual Self
+
+This repository explores the frontier of Business Intelligence through the lens of human digital twinning, utilizing the Twin2k-500 dataset (Toubia et al., 2025). While the concept of digital twins originated in aerospace and manufacturing — exemplified by the fully digital prototyping of the Boeing 777 — applying this technology to human behavior introduces a unique set of ethical and methodological challenges. Unlike industrial systems governed by the laws of physics, human twins are built upon self-reported psychometric data, requiring sophisticated calibration to account for social desirability bias and narrative agency. This project implements a predictive framework that balances functional optimization with a commitment to algorithmic fairness, seeking to model not just who a consumer is, but the psychological nuances that define their decision-making architecture.
+
+---
+
 ## 📋 Project Overview
 
 | | |
