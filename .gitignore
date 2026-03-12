@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+*.egg-info/
+dist/
+build/
+
+# Data – raw parquet files are large; processed CSV is tracked
+data/raw/*.parquet
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# JMP / Tableau project files (keep notes, ignore binary project files)
+*.jmp
+*.jmpprj
+*.twb
+*.twbx
+*.tds
+*.tde
+*.hyper
