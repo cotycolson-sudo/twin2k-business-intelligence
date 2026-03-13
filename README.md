@@ -1,120 +1,88 @@
-# 🧠 Twin2K Business Intelligence
-### TBANLT 485 · University of Washington Tacoma · Milgard School of Business
-
-> **Can personality traits, cognitive ability, and behavioral economic tendencies predict an individual's financial risk tolerance?**
-
+# Twin2K Business Intelligence
+### TBANLT 485 · Business Intelligence · University of Washington Tacoma
+**Student:** Coty Colson | **Instructor:** Professor Michael Turek | **Due:** March 17, 2026
 ---
-
-## 🌐 Project Context: Modeling the Virtual Self
-
-This repository explores the frontier of Business Intelligence through the lens of human digital twinning, utilizing the Twin2k-500 dataset (Toubia et al., 2025). While the concept of digital twins originated in aerospace and manufacturing — exemplified by the fully digital prototyping of the Boeing 777 — applying this technology to human behavior introduces a unique set of ethical and methodological challenges. Unlike industrial systems governed by the laws of physics, human twins are built upon self-reported psychometric data, requiring sophisticated calibration to account for social desirability bias and narrative agency. This project implements a predictive framework that balances functional optimization with a commitment to algorithmic fairness, seeking to model not just who a consumer is, but the psychological nuances that define their decision-making architecture.
-
+## Project Overview
+This project applies the **CRISP-DM framework** to the **Twin-2K-500 dataset** — a large-scale behavioral and psychological survey of 2,058 participants across 4 research waves, spanning 500+ validated psychometric and behavioral economics variables.
+**Central Business Problem:** Can personality traits, cognitive ability, and behavioral economic tendencies predict an individual's financial risk tolerance?
+**Target Variable:** `score_riskaversion_recode` — implied risk aversion coefficient derived from incentivized lottery choice experiments (median-imputed for 233 missing values).
+**Applications:** Personalized investment advising · Insurance pricing · Behavioral nudge design · Financial wellness coaching
 ---
-
-## 📋 Project Overview
-
-| | |
-|---|---|
-| **Course** | TBANLT 485 – Business Intelligence |
-| **Instructor** | Professor Michael Turek |
-| **Student** | Coty Colson |
-| **Framework** | CRISP-DM |
-| **Due Date** | March 17, 2026 |
-
-This project applies the full CRISP-DM data mining framework to the **Twin-2K-500 dataset** — a large-scale behavioral and psychological survey of 2,058 participants — to build a predictive model for **financial risk tolerance** (`score_riskaversion`) from personality and cognitive variables.
-
----
-
-## 🗂 Repository Structure
-
-    twin2k-business-intelligence/
-    ├── data/
-    │   ├── raw/               # Parquet source files (local only, not committed)
-    │   └── processed/
-    │       └── twin2k_flat.csv  # 2,058 rows × 61 columns, JMP-ready
-    ├── scripts/
-    │   └── extract_scores.py  # Parquet → flat CSV extraction pipeline
-    ├── jmp/
-    │   └── notes.md           # JMP analysis notes (CRISP-DM phases)
-    ├── tableau/
-    │   └── notes.md           # Tableau visualization notes
-    ├── deliverables/          # Final Word document submission
-    ├── .gitignore
-    └── README.md
-
----
-
-## 📊 Dataset
-
-**Twin-2K-500** is a peer-reviewed behavioral economics and personality dataset collected across 4 research waves.
-
+## Dataset
 | Attribute | Value |
 |---|---|
+| Name | Twin-2K-500 |
+| Source | Toubia et al. (2025) — Published psychometric research |
 | Participants | 2,058 |
-| Variables per participant | 60+ |
-| Total data points | 123,480+ |
-| Source | Published psychometric research |
-
-### Why This Dataset Meets the 5,000-Row Threshold
-
-The course minimum exists as a proxy for *modeling sufficiency* — ensuring enough information to build meaningful models. Row count is a proxy for information density, but this dataset inverts the typical tradeoff:
-
-| Dataset | Rows | Variables | Total Data Points |
-|---|---|---|---|
-| Typical course dataset | 5,000 | ~15 | ~75,000 |
-| **Twin-2K-500** | **2,058** | **60+** | **123,480+** |
-
-With **1.6× more information** than the 5,000-row benchmark — and every variable drawn from a validated psychometric scale or behavioral economics experiment — this dataset exceeds the modeling sufficiency threshold on information content while offering substantially higher data quality.
-
+| Variables (final) | 59 (after removing 2 unviable columns) |
+| Numeric variables | 46 validated psychometric & behavioral scores |
+| Categorical variables | 12 demographic variables |
+| Research waves | 4 longitudinal waves |
+| Format | Processed from 7 parquet files → `twin2k_flat.csv` |
+> **Note on dataset size:** The course minimum of 5,000 rows is a proxy for modeling sufficiency. Twin-2K-500 has 60+ variables per participant = 123,480+ total data points vs. ~75,000 for a typical 5,000-row/15-variable dataset — a 1.6× information ratio. Every variable is a validated psychometric scale or behavioral economics experiment result.
 ---
-
-## 🎯 Business Problem
-
-**Predicting financial risk tolerance from personality and behavioral traits.**
-
-**Target Variable:** `score_riskaversion` — implied risk aversion coefficient from lottery choice experiments
-
-**Predictor Categories:**
-
-| Category | Variables |
-|---|---|
-| Big Five Personality | Extraversion, Agreeableness, Conscientiousness, Openness, Neuroticism |
-| Cognitive Ability | Need for Cognition, CRT Score, Fluid Intelligence, Crystallized Intelligence, Numeracy |
-| Economic Behavior | Ultimatum Game, Trust Game, Dictator Game, Mental Accounting |
-| Demographics | Age, Income, Education Level, Gender |
-
+## CRISP-DM Progress
+| Phase | Status | Notes |
+|---|---|---|
+| Business Understanding | ✅ Complete | Target variable locked, business problem defined |
+| Data Understanding | ✅ Complete | 46 numeric + 12 categorical variables fully profiled |
+| Data Preparation | 🔄 In Progress | See breakdown below |
+| Modeling | ⏳ Pending | Stepwise MLR (Forward / Backward / Mixed) + Decision Trees |
+| Evaluation | ⏳ Pending | Compare by Validation R² and RASE |
+| Deployment | ⏳ Pending | Final report + Tableau visualizations |
+### Data Preparation Breakdown
+| Step | Status | Finding |
+|---|---|---|
+| Skewness assessment | ✅ Complete | 0 variables exceed \|skewness\| > 10 — no transformations needed |
+| Missing value imputation | ✅ Complete | `score_riskaversion_recode` (233 imputed) · `score_forwardflow_recode` (1 imputed) |
+| Outlier detection (1.5×IQR) | ✅ Complete | 29 variables flagged — all within valid instrument ranges, none removed |
+| Categorical grouping | ⏳ Pending | `religion` (12→5) · evaluate `employment_status` (7) |
+| Multicollinearity check | ⏳ Pending | Flag \|r\| > 0.75 pairs |
+| Final variable selection | ⏳ Pending | Confirm 18-predictor model |
 ---
-
-## 🔄 CRISP-DM Phases
-
-- [x] **Business Understanding** — Define business problem and target variable
-- [x] **Data Understanding** — Univariate analysis, missing value assessment
-- [ ] **Data Preparation** — Skewness correction, outlier detection, imputation, grouping
-- [ ] **Modeling** — Stepwise regression (Forward, Backward, Mixed) in JMP
-- [ ] **Evaluation** — Compare models by Validation R² and RASE
-- [ ] **Deployment** — Document findings, build Tableau visualizations
-
+## Planned Model Variables
+**Target:** `score_riskaversion_recode`
+**Predictors (18 planned):**
+- **Big Five Personality (5):** extraversion, agreeableness, conscientiousness, openness, neuroticism
+- **Cognitive Ability (5):** need for cognition, CRT-2, fluid intelligence, crystallized intelligence, numeracy
+- **Economic Behavior (4):** ultimatum game, trust game, dictator game, mental accounting
+- **Demographics (4):** age, income, education level, gender
 ---
-
-## 🛠 Tools
-
+## Repository Structure
+```
+twin2k-business-intelligence/
+├── README.md
+├── ETHICS.md                        ← Ethical framework for human digital twins
+├── .gitignore
+├── data/
+│   ├── raw/                         ← Parquet files (local only, not committed)
+│   └── processed/
+│       └── twin2k_flat.csv          ← 2,058 × 61 processed dataset
+├── scripts/
+│   └── extract_scores.py            ← Parquet → CSV extraction pipeline
+├── jmp/
+│   ├── twin2k_flat.jmp              ← JMP data table (variable types + recode columns configured)
+│   └── notes.md
+├── tableau/
+│   └── notes.md
+└── deliverables/
+    └── DataUnderstanding_CotypColson_v2.docx  ← WIP report (screenshots pending)
+```
+---
+## Ethical Framework
+See [`ETHICS.md`](ETHICS.md) for full documentation. Key principles:
+- **Stochastic vs. deterministic twins** — human behavioral data is probabilistic, not deterministic (unlike industrial digital twins)
+- **Ideal Self skew** — self-reported data calibrated against `score_socialdesirability`
+- **Uncertainty quantification** — probabilistic outputs over binary predictions
+- **No outlier removal** — extreme human responses are valid data points, not errors
+---
+## Tools & Workflow
 | Tool | Purpose |
 |---|---|
-| Python (PyArrow, Pandas) | Parquet parsing, data extraction |
-| JMP Student Edition | CRISP-DM data prep and modeling |
-| Tableau Public | Visualization |
-| Claude AI | Analysis assistance (transparently acknowledged) |
-| GitHub | Version control and project documentation |
-
+| JMP Pro | Primary modeling platform (stepwise regression, decision trees) |
+| Tableau Public 2025.3 | Visualizations (data extract mode for publishing) |
+| Python | Parquet extraction · preprocessing pipeline |
+| Claude (Anthropic) | Research support · document structuring · AI assistance |
+*Analysis decisions, variable selections, and modeling interpretations reflect independent student judgment.*
 ---
-
-## 🚀 Getting Started
-
-```bash
-git clone https://github.com/cotycolson-sudo/twin2k-business-intelligence.git
-cd twin2k-business-intelligence
-pip install pandas pyarrow
-python scripts/extract_scores.py
-```
-
-*TBANLT 485 · University of Washington Tacoma · Milgard School of Business*
+*TBANLT 485 · Milgard School of Business · University of Washington Tacoma · March 2026*
