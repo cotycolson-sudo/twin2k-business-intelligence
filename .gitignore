@@ -30,7 +30,6 @@ Thumbs.db
 *.ipynb
 
 # JMP / Tableau project files (keep notes, ignore binary project files)
-*.jmp
 *.jmpprj
 *.twb
 *.twbx
